@@ -2,7 +2,6 @@
 
 import { ScalarBook } from "@/types/Book";
 import axios from "axios";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 function OnlyBook({ params }: { params: { book: string } }) {
@@ -31,7 +30,7 @@ function OnlyBook({ params }: { params: { book: string } }) {
     <>
       <main>
         <div>
-          <Image src={bookInfo?.cover_page as string} alt="cover" />
+          <img src={bookInfo?.cover_page as string} alt="cover" />
         </div>
       </main>
     </>
