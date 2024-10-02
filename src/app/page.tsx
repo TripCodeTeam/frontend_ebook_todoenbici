@@ -15,7 +15,9 @@ export default function Home() {
         const data: ScalarBook[] = await response.json();
         console.log(data);
         setBooks(data);
-      } catch (error) {}
+      } catch (error) {
+        console.error(error)
+      }
     };
 
     getAllBooks();

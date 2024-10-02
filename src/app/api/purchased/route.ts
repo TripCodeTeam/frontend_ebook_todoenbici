@@ -1,4 +1,4 @@
-import { ScalarBook, ScalarPurchased } from "@/types/Book";
+import { ScalarPurchased } from "@/types/Book";
 import axios from "axios";
 import { NextResponse } from "next/server";
 

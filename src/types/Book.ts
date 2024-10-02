@@ -14,8 +14,8 @@ export type ScalarBook = {
   stock: number;
   upId: string;
   media: string;
-  isPhysical: Boolean;
-  isVirtual: Boolean;
+  isPhysical: boolean;
+  isVirtual: boolean;
   created_at?: Date;
   updated_at?: Date;
 };

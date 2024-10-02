@@ -1,20 +1,19 @@
 import { ScalarBook } from "@/types/Book";
 import Image from "next/image";
 import React from "react";
-import styles from "./bookcard.module.css";
 import {
   TbBookmark,
   TbPencilStar,
   TbShoppingCartPlus,
   TbWorld,
 } from "react-icons/tb";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import Avatar from "react-avatar";
 
 function BookCard({ book }: { book: ScalarBook }) {
-  const handleSaveBook = () => {
-    toast.warning("Opcion no disponible");
-  };
+  // const handleSaveBook = () => {
+  //   toast.warning("Opcion no disponible");
+  // };
 
   return (
     <>
