@@ -22,8 +22,8 @@ function ListBooks() {
   }, []);
   return (
     <>
-      {books?.map((book) => (
-        <BookCard book={book} />
+      {books?.map((book, index) => (
+        <BookCard key={index} book={book} />
       ))}
     </>
   );
