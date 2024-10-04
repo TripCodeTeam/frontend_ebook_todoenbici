@@ -6,6 +6,8 @@ import { PiBooksDuotone } from "react-icons/pi";
 import { SiGitbook } from "react-icons/si";
 import { TbBookmarkFilled, TbMenu2, TbUserCircle } from "react-icons/tb";
 import { useMediaQuery } from "react-responsive";
+import Signin from "../auth/Signin";
+import Signup from "../auth/signup";
 
 function NavBar() {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
@@ -87,26 +89,31 @@ function NavBar() {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-80">
-            <h2 className="text-xl font-semibold mb-4">{modalContent}</h2>
-            <p>
-              {modalContent === "Iniciar Sesion"
-                ? "Formulario de inicio de sesión aquí..."
-                : "Formulario de registro aquí..."}
-            </p>
-            <button
-              onClick={handleCloseModal}
-              className="mt-4 text-white bg-red-500 hover:bg-red-700 rounded-lg px-4 py-2"
-            >
-              Cerrar
-            </button>
+          <div className="bg-white rounded-lg p-6 w-11/12 sm:w-80 md:w-96 lg:w-1/2">
+            <div className="flex flex-row justify-between">
+              <h2 className="text-xl font-semibold grid place-content-center">
+                {modalContent}
+              </h2>
+              <button
+                onClick={handleCloseModal}
+                className="mt-4 text-white bg-red-500 hover:bg-red-700 rounded-lg px-4 py-2"
+              >
+                Cerrar
+              </button>
+            </div>
+
+            <div>
+              <p>
+                {modalContent === "Iniciar Sesion" ? <Signin /> : <Signup />}
+              </p>
+            </div>
           </div>
         </div>
       )}
 
       {/* Drawer component */}
       <div
-        className={`fixed top-0 right-0 z-40 w-64 h-dvh p-4 overflow-y-auto transition-transform ${
+        className={`fixed top-0 right-0 z-40 w-64 p-4 overflow-y-auto transition-transform ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         } bg-white dark:bg-gray-800`}
         tabIndex={-1}
