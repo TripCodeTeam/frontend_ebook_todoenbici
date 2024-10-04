@@ -11,11 +11,12 @@ export type ScalarBook = {
   editorial?: string;
   language: string[];
   genre: string[];
-  stock: number;
-  upId: string;
-  media: string;
+  stock?: number;
+  upId?: string;
+  media?: string;
   isPhysical: boolean;
   isVirtual: boolean;
+  sellerId: string;
   created_at?: Date;
   updated_at?: Date;
 };

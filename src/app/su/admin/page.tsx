@@ -1,11 +1,11 @@
 "use client";
 
-import AddBook from "@/app/components/admin/AddBook";
+import AddBook from "@/components/admin/AddBook";
 import React, { useState } from "react";
 import { TbPlaylistAdd, TbSearch } from "react-icons/tb";
 import styles from "./page.module.css";
-import ListBooks from "@/app/components/admin/ListBooks";
-import SalesBooks from "@/app/components/admin/Sales";
+import ListBooks from "@/components/admin/ListBooks";
+import SalesBooks from "@/components/admin/Sales";
 
 type sideProps = "books" | "sales";
 
@@ -14,12 +14,13 @@ function AdminPage() {
   const [side, setSide] = useState<sideProps>("books");
 
   const handleOpenSide = (side: sideProps) => setSide(side);
+  const handleCloseAdd = () => setOpenAddBook(false);
 
   return (
     <>
       <main className={styles.barSearch}>
-        <div className="flex flex-wrap gap-2 mt-7 mb-5">
-          <div className="grid place-content-center">
+        <div className="flex flex-col gap-2 mt-7 mb-5 md:flex-row md:flex-wrap">
+          <div className="flex justify-start">
             <button
               onClick={() => setOpenAddBook(!openAddBook)}
               type="button"
@@ -49,17 +50,29 @@ function AdminPage() {
           )}
         </div>
 
-        {openAddBook && <AddBook />}
+        {openAddBook && <AddBook success={handleCloseAdd} />}
 
         {!openAddBook && (
-          <div>
-            <div className="flex flex-1 justify-start gap-3 mt-6">
-              <h3 onClick={() => handleOpenSide("books")}>Tus Libros</h3>
-              <h3 onClick={() => handleOpenSide("sales")}>Ventas</h3>
+          <div className="flex flex-col">
+            <div className="flex flex-1 justify-start gap-3 mt-6 mb-6">
+              <h3
+                className="border-b border-gray-300 hover:border-gray-600 cursor-pointer p-2"
+                onClick={() => handleOpenSide("books")}
+              >
+                Tus Libros
+              </h3>
+              <h3
+                className="border-b border-gray-300 hover:border-gray-600 cursor-pointer p-2"
+                onClick={() => handleOpenSide("sales")}
+              >
+                Ventas
+              </h3>
             </div>
 
-            {side == "books" && <ListBooks />}
-            {side == "sales" && <SalesBooks />}
+            <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-4 gap-4">
+              {side == "books" && <ListBooks />}
+              {side == "sales" && <SalesBooks />}
+            </div>
           </div>
         )}
       </main>

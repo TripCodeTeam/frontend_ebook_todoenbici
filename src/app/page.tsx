@@ -2,7 +2,7 @@
 
 import { ScalarBook } from "@/types/Book";
 import { useEffect, useState } from "react";
-import BookCard from "./components/Cards/BookCard";
+import BookCard from "@/components/Cards/BookCard";
 import styles from "./page.module.css";
 
 export default function Home() {

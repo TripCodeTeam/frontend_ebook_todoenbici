@@ -1,0 +1,14 @@
+.card {
+    background: var();
+}
+
+.contentCover {
+  display: flex;
+  justify-content: flex-start;
+  /* height: 200px; */
+}
+
+.titleBook {
+    font-weight: 800;
+    font-size: 25px;
+}
