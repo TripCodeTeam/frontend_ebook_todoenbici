@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 import { GlobalProvider } from "./context/Auth";
+import { Toaster } from "sonner";
+import React from "react";
+import { Content } from "./LoadingContent";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <GlobalProvider>
+          <Toaster richColors />
           <NavBar />
-          {children}
+          <Content>{children}</Content>
         </GlobalProvider>
       </body>
     </html>

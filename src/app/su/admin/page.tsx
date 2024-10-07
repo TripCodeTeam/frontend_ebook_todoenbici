@@ -1,17 +1,22 @@
 "use client";
 
 import AddBook from "@/components/admin/AddBook";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TbPlaylistAdd, TbSearch } from "react-icons/tb";
 import styles from "./page.module.css";
 import ListBooks from "@/components/admin/ListBooks";
 import SalesBooks from "@/components/admin/Sales";
+import { useGlobalContext } from "@/app/context/Auth";
+import { useRouter } from "next/navigation";
 
 type sideProps = "books" | "sales";
 
 function AdminPage() {
   const [openAddBook, setOpenAddBook] = useState<boolean>(false);
   const [side, setSide] = useState<sideProps>("books");
+
+  const { user } = useGlobalContext();
+  const router = useRouter();
 
   const handleOpenSide = (side: sideProps) => setSide(side);
   const handleCloseAdd = () => setOpenAddBook(false);

@@ -1,10 +1,38 @@
+"use client";
+
+import { useGlobalContext } from "@/app/context/Auth";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 function Signin() {
   const [isSignin, setIsSignin] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
 
-  const handlerSignin = () => {
-    setIsSignin(true);
+  const { handleLogin } = useGlobalContext();
+
+  const router = useRouter()
+
+  const handlerSignin = async () => {
+    try {
+      setIsSignin(true);
+      if (!email && password) throw new Error("Ingresa tu correo electronico");
+      if (email && !password) throw new Error("Ingresa tu contraseña");
+      if (!email && !password) throw new Error("Ingresa tus credenciales");
+
+      const res = await handleLogin(email as string, password as string);
+
+      if (res.success == true) {
+        if (res.rol == "SELLER") router.push("/su/admin")
+        if (res.rol == "READER") window.location.href = "/discover";
+      }
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   return (
@@ -21,8 +49,8 @@ function Signin() {
             type="text"
             id="first_name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="John"
             required
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -34,21 +62,22 @@ function Signin() {
             Contraseña
           </label>
           <input
-            type="text"
+            type="password"
             id="first_name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="John"
             required
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
         <div className="mt-5">
           <button
             type="button"
+            onClick={handlerSignin}
             className="w-full grid place-content-center text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:focus:ring-gray-500 me-2 mb-2"
           >
             <div className="flex flex-row">
-              <div className="grid place-content-center">
+              {/* <div className="grid place-content-center">
                 <svg
                   className="w-4 h-4 me-2 -ms-1 text-[#626890]"
                   aria-hidden="true"
@@ -64,7 +93,7 @@ function Signin() {
                     d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
                   ></path>
                 </svg>
-              </div>
+              </div> */}
               <h5>Ingresar</h5>
             </div>
           </button>
@@ -76,6 +105,7 @@ function Signin() {
 
         <div className="grid place-content-center mt-5">
           <button
+            onClick={() => toast.warning("No disponible por el momento")}
             type="button"
             className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2 gap-3"
           >

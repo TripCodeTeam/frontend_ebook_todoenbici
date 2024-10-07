@@ -1,6 +1,60 @@
-import React from "react";
+import { useGlobalContext } from "@/app/context/Auth";
+import { CreateUserDto } from "@/types/user";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 function Signup() {
+  const [newUser, setNewUser] = useState<CreateUserDto | null>();
+  const { handleLogin } = useGlobalContext();
+  const router = useRouter();
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: keyof CreateUserDto
+  ) => {
+    const { value } = e.target;
+
+    setNewUser((prevUserData) => ({
+      ...(prevUserData as CreateUserDto),
+      [key]: value,
+    }));
+  };
+
+  const handleNewUser = async () => {
+    const errors: string[] = [];
+    try {
+      if (!newUser?.completeName || newUser.completeName.length === 0) {
+        errors.push("Ingresa tu nombre");
+        throw new Error("completeName is required!");
+      }
+
+      if (!newUser?.email || newUser.email.length === 0) {
+        errors.push("Ingresa tu correo electronico");
+        throw new Error("email is required!");
+      }
+
+      if (!newUser?.password || newUser.password.length === 0) {
+        errors.push("Ingresa tu correo electronico");
+        throw new Error("password is required!");
+      }
+
+      const response = await axios.post("/api/auth/signup", newUser);
+
+      if (response.data.success == true) {
+        const signin = await handleLogin(newUser.email, newUser.password);
+
+        if (signin.success == true) {
+          if (signin.rol == "SELLER") router.push("/su/admin");
+          if (signin.rol == "READER") window.location.href = "/discover";
+        }
+      }
+    } catch (error) {
+      errors.forEach((error) => toast.error(error));
+    }
+  };
+
   return (
     <div className="mt-3">
       <div className="mt-3">
@@ -11,6 +65,7 @@ function Signup() {
           Nombre completo
         </label>
         <input
+          onChange={(e) => handleInputChange(e, "completeName")}
           type="text"
           id="first_name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -26,6 +81,7 @@ function Signup() {
           Nombre de usuario
         </label>
         <input
+          onChange={(e) => handleInputChange(e, "username")}
           type="text"
           id="first_name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -42,6 +98,7 @@ function Signup() {
         </label>
         <input
           type="text"
+          onChange={(e) => handleInputChange(e, "email")}
           id="first_name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
@@ -56,7 +113,8 @@ function Signup() {
           Contraseña
         </label>
         <input
-          type="text"
+          onChange={(e) => handleInputChange(e, "password")}
+          type="password"
           id="first_name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
@@ -65,11 +123,12 @@ function Signup() {
 
       <div className="mt-5">
         <button
+          onClick={handleNewUser}
           type="button"
           className="w-full grid place-content-center text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:focus:ring-gray-500 me-2 mb-2"
         >
           <div className="flex flex-row">
-            <div className="grid place-content-center">
+            {/* <div className="grid place-content-center">
               <svg
                 className="w-4 h-4 me-2 -ms-1 text-[#626890]"
                 aria-hidden="true"
@@ -85,7 +144,7 @@ function Signup() {
                   d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
                 ></path>
               </svg>
-            </div>
+            </div> */}
             <h5>Registrarse</h5>
           </div>
         </button>
@@ -97,6 +156,7 @@ function Signup() {
 
       <div className="grid place-content-center mt-5">
         <button
+          onClick={() => toast.warning("No disponible por el momento")}
           type="button"
           className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2 gap-3"
         >

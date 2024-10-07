@@ -1,27 +1,24 @@
+// Auth.tsx
 "use client";
 
-import React, {
-  createContext,
-  useContext,
-  ReactNode,
-  useState,
-  useEffect,
-} from "react";
+import React, { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { AuthUser } from "@/types/user"; // Importa el tipo de usuario autenticado (lo definiremos abajo)
+import { CreateUserDto, rolUser } from "@/types/user";
 
 interface GlobalContextType {
-  user: AuthUser | null;
-  setUserData: (userData: AuthUser) => void;
-  handleLogin: (email: string, password: string) => Promise<void>;
+  user: CreateUserDto | null;
+  loadingUser: boolean;  // Estado para saber si se está verificando el usuario
+  setUserData: (userData: CreateUserDto) => void;
+  handleLogin: (email: string, password: string) => Promise<{ success: boolean; rol?: rolUser }>;
   handleLogout: () => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 export function GlobalProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<CreateUserDto | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true); // Inicia en true, porque estamos verificando
 
   // Verificar si hay una sesión activa al cargar la aplicación
   useEffect(() => {
@@ -33,15 +30,20 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          setUser(response.data.user);
+          setUser(response.data.data);
         })
         .catch(() => {
           handleLogout(); // Si el token es inválido, cerramos sesión
+        })
+        .finally(() => {
+          setLoadingUser(false); // Termina la verificación
         });
+    } else {
+      setLoadingUser(false); // No hay token, termina la verificación
     }
   }, []);
 
-  const setUserData = (userData: AuthUser) => {
+  const setUserData = (userData: CreateUserDto) => {
     setUser(userData);
     Cookies.set("userData", JSON.stringify(userData), { expires: 1 });
   };
@@ -49,21 +51,26 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
   // Método para iniciar sesión y guardar el token
   const handleLogin = async (email: string, password: string) => {
     try {
-      const response = await axios.post("/api/auth/login", { email, password });
-      const { access_token } = response.data;
+      const response = await axios.post("api/auth/signin", {
+        email,
+        password,
+      });
+
+      const access_token = response.data.data;
 
       // Guardar el token en cookies
       Cookies.set("accessToken", access_token, { expires: 1 });
 
       // Obtener la información del usuario
-      const userResponse = await axios.get("/api/auth/me", {
+      const userResponse = await axios.get("api/auth/me", {
         headers: { Authorization: `Bearer ${access_token}` },
       });
 
-      setUser(userResponse.data.user);
-      Cookies.set("userData", JSON.stringify(userResponse.data.user), {
-        expires: 1,
-      });
+      const data: CreateUserDto = userResponse.data.data;
+      setUser(data);
+      Cookies.set("userData", JSON.stringify(data), { expires: 1 });
+
+      return { success: true, rol: data.rol };
     } catch (error) {
       console.error("Login failed", error);
       throw new Error("Invalid credentials");
@@ -79,7 +86,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
 
   return (
     <GlobalContext.Provider
-      value={{ user, setUserData, handleLogin, handleLogout }}
+      value={{ user, loadingUser, setUserData, handleLogin, handleLogout }}
     >
       {children}
     </GlobalContext.Provider>

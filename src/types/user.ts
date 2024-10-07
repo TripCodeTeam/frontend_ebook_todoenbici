@@ -1,8 +1,19 @@
-// Define la estructura de un usuario autenticado
-export interface AuthUser {
-  id: string; // El ID del usuario
-  name: string; // Nombre del usuario
-  email: string; // Correo electrónico
-  role: string; // Rol del usuario (ej: 'admin', 'user', etc.)
-  // Añade otros campos relevantes según la información de usuario que manejes
+interface BooksClients {
+  bookId: string;
+  purchasedRecordId: string;
 }
+
+export type rolUser = 'READER' | 'SELLER';
+
+export type CreateUserDto = {
+  id?: string;
+  completeName: string;
+  username: string;
+  email: string;
+  password: string;
+  avatar?: string;
+  books_purchased?: BooksClients[]; // Esto será manejado en la creación anidada
+  rol?: rolUser;
+  created_at?: Date;
+  updated_at?: Date;
+};
