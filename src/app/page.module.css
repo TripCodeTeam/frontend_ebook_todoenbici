@@ -1,4 +1,11 @@
 .mainBooks {
-    width: 90%;
-    margin-left: 5%;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.mainBooksDark {
+  width: 90%;
+  margin-left: 5%;
+  color-scheme: dark;
+  background: #676767;
 }

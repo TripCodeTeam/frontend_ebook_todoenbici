@@ -64,7 +64,7 @@ function Signin() {
           <input
             type="password"
             id="first_name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -100,7 +100,7 @@ function Signin() {
         </div>
 
         <div className="grid place-content-center mt-5">
-          <p>-- Tambien --</p>
+          <p className="dark:text-white">-- Tambien --</p>
         </div>
 
         <div className="grid place-content-center mt-5">

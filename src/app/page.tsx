@@ -3,10 +3,10 @@
 import { ScalarBook } from "@/types/Book";
 import { useEffect, useState } from "react";
 import BookCard from "@/components/Cards/BookCard";
-import styles from "./page.module.css";
 
 export default function Home() {
   const [books, setBooks] = useState<ScalarBook[]>([]);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const getAllBooks = async () => {
@@ -16,7 +16,7 @@ export default function Home() {
         console.log(data);
         setBooks(data);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     };
 
@@ -25,9 +25,7 @@ export default function Home() {
 
   return (
     <>
-      <main className={styles.mainBooks}>
-        {/* <h1>Landing Page Ebook</h1> */}
-
+      <main className=" bg-white min-h-dvh dark:bg-gray-700">
         {books.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-4 gap-4">
             {books.map((book) => (

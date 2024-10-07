@@ -206,13 +206,13 @@ const AddBook = ({ success }: { success: () => void }) => {
       <div className="flex flex-wrap gap-5 mt-5 mb-6">
         <div className="flex basis-72 flex-1 flex-col">
           <div className="flex flex-col">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Nombre del libro
             </h3>
             <input
               type="text"
               id="first_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               required
               name="nameBook"
               onChange={(e) => handleInputChange(e, "nameBook")}
@@ -220,30 +220,34 @@ const AddBook = ({ success }: { success: () => void }) => {
           </div>
 
           <div className="flex flex-col mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">Autor</h3>
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
+              Autor
+            </h3>
             <input
               type="text"
               id="first_name"
               name="author"
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               required
               onChange={(e) => handleInputChange(e, "author")}
             />
           </div>
 
           <div className="flex flex-col mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">Descripcion</h3>
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
+              Descripcion
+            </h3>
             <textarea
               id="message"
               rows={4}
               name="description"
               onChange={(e) => handleInputChange(e, "description")}
-              className="block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             ></textarea>
           </div>
 
           <div className="flex flex-col mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Precio (USD)
             </h3>
             <input
@@ -251,13 +255,13 @@ const AddBook = ({ success }: { success: () => void }) => {
               onChange={(e) => handleInputChange(e, "price")}
               name="price"
               id="first_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               required
             />
           </div>
 
           <div className="mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Portada y Contraportada
             </h3>
 
@@ -342,12 +346,12 @@ const AddBook = ({ success }: { success: () => void }) => {
           </div>
 
           <div className="mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Selecciona Idioma
             </h3>
             <div className="flex items-center space-x-3">
               <select
-                className="border rounded-sm p-2 flex flex-1"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
               >
@@ -362,7 +366,7 @@ const AddBook = ({ success }: { success: () => void }) => {
                 className="bg-blue-500 text-white p-2 rounded"
                 onClick={addLanguage}
               >
-                Agregar idioma
+                Agregar
               </button>
             </div>
 
@@ -373,13 +377,15 @@ const AddBook = ({ success }: { success: () => void }) => {
                   <h4 className="text-md font-semibold text-gray-600">
                     Idiomas seleccionados:
                   </h4>
-                  <ul className="list-disc pl-5 flex flex-col gap-2">
+                  <ul className="list-disc flex flex-col gap-2 dark:bg-gray-700">
                     {selectedLanguages.map((lang, index) => (
                       <li
                         key={index}
-                        className="flex flex-1 justify-between p-1 bg-slate-100"
+                        className="flex flex-1 justify-between p-1"
                       >
-                        {lang}
+                        <p className="text-black dark:text-gray-300 grid place-content-center">
+                          {lang}
+                        </p>
                         <button
                           className="ml-3 bg-red-500 text-white p-1 rounded"
                           onClick={() => removeLanguage(index)}
@@ -395,12 +401,12 @@ const AddBook = ({ success }: { success: () => void }) => {
           </div>
 
           <div className="mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Selecciona Generos
             </h3>
             <div className="flex items-center space-x-3">
               <select
-                className="border rounded-sm p-2 flex flex-1"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 value={genres}
                 onChange={(e) => setGenres(e.target.value)}
               >
@@ -421,7 +427,7 @@ const AddBook = ({ success }: { success: () => void }) => {
                 className="bg-blue-500 text-white p-2 rounded"
                 onClick={addGenre}
               >
-                Agregar Genero
+                Agregar
               </button>
             </div>
 
@@ -432,13 +438,15 @@ const AddBook = ({ success }: { success: () => void }) => {
                   <h4 className="text-md font-semibold text-gray-600">
                     Generos seleccionados:
                   </h4>
-                  <ul className="list-disc pl-5 flex flex-col gap-2">
+                  <ul className="list-disc flex flex-col gap-2 dark:bg-gray-700">
                     {selectedGenres.map((genre, index) => (
                       <li
                         key={index}
-                        className="flex flex-1 justify-between p-1 bg-slate-100"
+                        className="flex flex-1 justify-between p-1"
                       >
-                        {genre}
+                        <p className="text-black dark:text-gray-300 grid place-content-center">
+                          {genre}
+                        </p>
                         <button
                           className="ml-3 bg-red-500 text-white p-1 rounded"
                           onClick={() => removeGenre(index)}
@@ -454,7 +462,7 @@ const AddBook = ({ success }: { success: () => void }) => {
           </div>
 
           <div className="flex flex-col mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Total de paginas
             </h3>
             <input
@@ -462,13 +470,13 @@ const AddBook = ({ success }: { success: () => void }) => {
               id="first_name"
               name="number_pages"
               onChange={(e) => handleInputChange(e, "number_pages")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               required
             />
           </div>
 
           <div className="flex flex-col mt-3">
-            <h3 className="text-lg font-semibold text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
               Editorial (Opcional)
             </h3>
             <input
@@ -476,18 +484,18 @@ const AddBook = ({ success }: { success: () => void }) => {
               id="first_name"
               name="e"
               onChange={(e) => handleInputChange(e, "editorial")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               required
             />
           </div>
 
           <div className="flex flex-col mt-3">
-            <h3 className="text-lg font-semibold text-gray-500 flex-1 mb-1">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-white flex-1 mb-1">
               Tipo de Ebook
             </h3>
             <div className="flex flex-row gap-3">
               <div className="flex items-center">
-                <label className="text-lg font-semibold text-gray-500 mr-2">
+                <label className="text-lg font-semibold dark:text-white text-gray-500 mr-2">
                   Físico
                 </label>
                 <label className="switch">
@@ -501,7 +509,7 @@ const AddBook = ({ success }: { success: () => void }) => {
               </div>
 
               <div className="flex items-center">
-                <label className="text-lg font-semibold text-gray-500 mr-2">
+                <label className="text-lg font-semibold dark:text-white text-gray-500 mr-2">
                   Virtual
                 </label>
                 <label className="switch">
@@ -518,7 +526,7 @@ const AddBook = ({ success }: { success: () => void }) => {
 
           {isPhysical == true && (
             <div className="flex flex-col mt-3">
-              <h3 className="text-lg font-semibold text-gray-500">
+              <h3 className="text-lg font-semibold text-gray-500 dark:text-white">
                 Cantidad inicial de libros en bodega
               </h3>
               <input
@@ -526,7 +534,7 @@ const AddBook = ({ success }: { success: () => void }) => {
                 type="text"
                 id="first_name"
                 name="stock"
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-base"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 required
               />
             </div>
@@ -534,13 +542,13 @@ const AddBook = ({ success }: { success: () => void }) => {
 
           {isVirtual == true && (
             <div className="mt-3">
-              <h3 className="text-lg font-semibold text-gray-500 flex-1 mb-1">
+              <h3 className="text-lg font-semibold text-gray-500 dark:text-white flex-1 mb-1">
                 Carga tu libro ebook
               </h3>
               <div className="flex items-center">
                 <input
                   type="file"
-                  className="border p-2 rounded w-full"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   onChange={handleFileBook}
                   accept="*/*" // Puedes ajustar el tipo de archivo permitido
                 />
@@ -553,7 +561,7 @@ const AddBook = ({ success }: { success: () => void }) => {
               <button
                 disabled
                 type="button"
-                className="py-2.5 px-5 me-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center mt-5"
+                className="py-2.5 px-5 me-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:outline-none dark:bg-gray-300 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center mt-5"  
               >
                 <svg
                   aria-hidden="true"

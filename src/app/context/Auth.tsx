@@ -1,17 +1,27 @@
 // Auth.tsx
 "use client";
 
-import React, { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { CreateUserDto, rolUser } from "@/types/user";
 
 interface GlobalContextType {
   user: CreateUserDto | null;
-  loadingUser: boolean;  // Estado para saber si se está verificando el usuario
+  loadingUser: boolean; // Estado para saber si se está verificando el usuario
   setUserData: (userData: CreateUserDto) => void;
-  handleLogin: (email: string, password: string) => Promise<{ success: boolean; rol?: rolUser }>;
+  handleLogin: (
+    email: string,
+    password: string
+  ) => Promise<{ success: boolean; rol?: rolUser }>;
   handleLogout: () => void;
+  changeDarkMode: () => void
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -19,16 +29,14 @@ const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 export function GlobalProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<CreateUserDto | null>(null);
   const [loadingUser, setLoadingUser] = useState(true); // Inicia en true, porque estamos verificando
+  const [darkmode, setDarkmode] = useState(false);
 
-  // Verificar si hay una sesión activa al cargar la aplicación
   useEffect(() => {
     const token = Cookies.get("accessToken");
     if (token) {
       // Si hay un token, obtenemos la información del usuario
       axios
-        .get("/api/auth/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        .get("/api/auth/me", { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
           setUser(response.data.data);
         })
@@ -84,9 +92,33 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     Cookies.remove("userData");
   };
 
+  useEffect(() => {
+    // Obtener el tema guardado en localStorage cuando se carga la app
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setDarkmode(savedTheme === "dark");
+    applyTheme(savedTheme);
+  }, []);
+
+  // Manejador para cambiar el tema
+  const changeDarkMode = () => {
+    setDarkmode(!darkmode);
+    // Guardar la preferencia en localStorage
+    localStorage.setItem("theme", !darkmode ? "dark" : "light");
+    applyTheme(!darkmode ? "dark" : "light");
+  };
+
+  // Función para aplicar el tema basado en el estado
+  const applyTheme = (theme: string) => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
     <GlobalContext.Provider
-      value={{ user, loadingUser, setUserData, handleLogin, handleLogout }}
+      value={{ user, loadingUser, setUserData, handleLogin, changeDarkMode , handleLogout }}
     >
       {children}
     </GlobalContext.Provider>

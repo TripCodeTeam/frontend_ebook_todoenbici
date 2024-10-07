@@ -6,6 +6,7 @@ import { PiBooksDuotone } from "react-icons/pi";
 import { SiGitbook } from "react-icons/si";
 import {
   TbBookmarkFilled,
+  TbBrightnessFilled,
   TbMenu2,
   TbSquareRoundedArrowRightFilled,
   TbUserCircle,
@@ -25,8 +26,8 @@ function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false); // Estado para el drawer
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user, handleLogout } = useGlobalContext();
-  const router = useRouter()
+  const { user, handleLogout, changeDarkMode } = useGlobalContext();
+  const router = useRouter();
 
   const handleOpenModal = (content: React.SetStateAction<string>) => {
     setModalContent(content);
@@ -46,7 +47,7 @@ function NavBar() {
   };
 
   return (
-    <div>
+    <div className="dark:bg-gray-700">
       <nav className="flex flex-row justify-between p-2">
         <div className="flex flex-row gap-1">
           <div className="grid place-content-center">
@@ -76,6 +77,17 @@ function NavBar() {
                 <>
                   <div>
                     <button
+                      onClick={changeDarkMode}
+                      type="button"
+                      className="text-black border border-gray-400 hover:bg-gray-500 hover:text-white focus:outline-none font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-300 dark:hover:text-white outline-none"
+                    >
+                      <TbBrightnessFilled />
+                      <span className="sr-only">Icon description</span>
+                    </button>
+                  </div>
+
+                  <div className="flex justify-center items-center">
+                    <button
                       type="button"
                       onClick={() => handleOpenModal("Iniciar Sesion")}
                       className="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2 gap-2"
@@ -85,7 +97,7 @@ function NavBar() {
                     </button>
                   </div>
 
-                  <div>
+                  <div className="flex justify-center items-center">
                     <button
                       type="button"
                       onClick={() => handleOpenModal("Registrarse")}
@@ -97,8 +109,20 @@ function NavBar() {
                   </div>
                 </>
               ) : (
-                <div className="relative">
+                <div className="relative flex flex-row">
                   {/* Div envolvente del avatar */}
+
+                  <div className="grid place-content-center">
+                    <button
+                      onClick={changeDarkMode}
+                      type="button"
+                      className="text-black border border-gray-400 hover:bg-gray-500 hover:text-white focus:outline-none font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-300 dark:hover:text-white outline-none"
+                    >
+                      <TbBrightnessFilled />
+                      <span className="sr-only">Icon description</span>
+                    </button>
+                  </div>
+
                   <div
                     className="grid place-content-center p-2 cursor-pointer"
                     onClick={toggleMenu}
@@ -113,7 +137,7 @@ function NavBar() {
 
                   {/* Menú flotante */}
                   {isOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg p-2 z-50 flex flex-col gap-2">
+                    <div className="absolute top-14 right-7 mt-2 w-48 bg-white rounded-lg shadow-lg p-2 z-50 flex flex-col gap-2">
                       <div
                         onClick={() =>
                           (window.location.href = `/${user.username.toLowerCase()}`)
@@ -130,7 +154,7 @@ function NavBar() {
 
                       <button
                         className="flex flex-row w-full  gap-1 text-left px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-200"
-                        onClick={() => window.location.href = "/discover"}
+                        onClick={() => (window.location.href = "/discover")}
                       >
                         <div className="grid place-content-center">
                           <SiGitbook size={20} />
@@ -170,7 +194,7 @@ function NavBar() {
 
           {isTabletOrMobile && (
             <button onClick={toggleDrawer}>
-              <TbMenu2 size={20} />
+              <TbMenu2 className="dark:text-white" size={20} />
             </button>
           )}
         </div>
@@ -178,9 +202,9 @@ function NavBar() {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-11/12 sm:w-80 md:w-96 lg:w-1/2">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-11/12 sm:w-80 md:w-96 lg:w-1/2">
             <div className="flex flex-row justify-between">
-              <h2 className="text-xl font-semibold grid place-content-center">
+              <h2 className="text-xl dark:text-white font-semibold grid place-content-center">
                 {modalContent}
               </h2>
               <button

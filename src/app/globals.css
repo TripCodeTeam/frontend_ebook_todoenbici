@@ -5,6 +5,8 @@
 @tailwind utilities;
 
 * {
+  margin: 0;
+  padding: 0;
   font-family: "Fredoka", system-ui;
   font-optical-sizing: auto;
   font-weight: 300;
@@ -12,4 +14,5 @@
   font-variation-settings: "wdth" 100;
   padding: 0;
   margin: 0;
+  @apply transition-colors duration-200;
 }
