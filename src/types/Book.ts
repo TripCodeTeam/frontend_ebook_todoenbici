@@ -16,7 +16,7 @@ export type ScalarBook = {
   media?: string;
   isPhysical: boolean;
   isVirtual: boolean;
-  sellerId: string;
+  sellerId?: string;
   created_at?: Date;
   updated_at?: Date;
 };

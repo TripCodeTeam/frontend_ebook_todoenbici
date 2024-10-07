@@ -51,7 +51,7 @@ function NavBar() {
       <nav className="flex flex-row justify-between p-2">
         <div className="flex flex-row gap-1">
           <div className="grid place-content-center">
-            <PiBooksDuotone size={30} />
+            <PiBooksDuotone className="text-black dark:text-white" size={30} />
           </div>
           <h1
             className="flex items-center text-2xl font-extrabold dark:text-gray-300"
@@ -217,7 +217,11 @@ function NavBar() {
 
             <div>
               <p>
-                {modalContent === "Iniciar Sesion" ? <Signin /> : <Signup />}
+                {modalContent === "Iniciar Sesion" ? (
+                  <Signin onClose={handleCloseModal} />
+                ) : (
+                  <Signup onClose={handleCloseModal} />
+                )}
               </p>
             </div>
           </div>
@@ -283,6 +287,19 @@ function NavBar() {
                   </span>
                 </a>
               </li>
+
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={changeDarkMode}
+                >
+                  <TbBrightnessFilled />
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    Modo Noche
+                  </span>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -306,27 +323,6 @@ function NavBar() {
             </button>
           </div>
         </div>
-
-        {/* Botones de Iniciar Sesión y Registrarse
-        <div className="flex flex-col gap-2 mt-4">
-          <button
-            type="button"
-            onClick={() => handleOpenModal("Iniciar Sesion")}
-            className="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 gap-2"
-          >
-            <TbUserCircle size={20} />
-            Iniciar Sesion
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleOpenModal("Registrarse")}
-            className="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 gap-2"
-          >
-            <HiOutlineMenuAlt2 />
-            Registrarse
-          </button>
-        </div> */}
       </div>
     </div>
   );

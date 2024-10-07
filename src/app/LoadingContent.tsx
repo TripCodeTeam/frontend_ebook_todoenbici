@@ -8,19 +8,17 @@ import { useRouter, usePathname } from "next/navigation";
 export function Content({ children }: { children: React.ReactNode }) {
   const { user, loadingUser } = useGlobalContext();
   const router = useRouter();
-  const pathname = usePathname(); // Obtiene la ruta actual
+  const pathname = usePathname();
 
-  // Si estamos verificando el usuario, mostramos la pantalla de carga
   if (loadingUser) {
     return <LoadingScreen />;
   }
 
-  // Si el usuario no está autenticado y no estamos en la página de inicio
-  if (!user && pathname !== "/") {
-    router.push("/"); // Redirigimos al home
-    return null; // Evitamos renderizar el contenido
+  // Si el usuario no está autenticado y no estamos en la página de inicio ni en una ruta de libros
+  if (!user && pathname !== "/" && !pathname.startsWith("/books/")) {
+    router.push("/");
+    return null;
   }
 
-  // Si todo está bien, mostramos el contenido
   return <>{children}</>;
 }

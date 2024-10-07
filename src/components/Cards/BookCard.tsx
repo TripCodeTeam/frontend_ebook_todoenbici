@@ -59,18 +59,18 @@ function BookCard({ book }: { book: ScalarBook }) {
           ))}
         </div>
 
-        <div className="p-2 flex flex-row justify-between">
+        <div className="p-2 flex flex-row justify-between gap-3">
           <div>
-            <h3 className="text-xl font-semibold">{book.nameBook}</h3>
+            <h3 className="text-xl font-semibold truncate max-w-full">
+              {book.nameBook}
+            </h3>
+
             <div className="flex flex-row gap-1">
               <div className="grid place-content-center">
-                <TbPencilStar />
+                <Avatar src={""} round={true} size={"25"} />
               </div>
               <p>{book.author}</p>
             </div>
-          </div>
-          <div className="grid place-content-center">
-            <Avatar src={""} round={true} size={"35"} />
           </div>
         </div>
 
@@ -82,7 +82,7 @@ function BookCard({ book }: { book: ScalarBook }) {
             </h1>
             <div
               className="hover:bg-white p-1 rounded-md cursor-pointer"
-              onClick={() => (window.location.href = `/${book.id}`)}
+              onClick={() => (window.location.href = `/books/${book.id}`)}
             >
               Saber mas
             </div>

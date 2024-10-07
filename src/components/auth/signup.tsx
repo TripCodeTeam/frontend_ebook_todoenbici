@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-function Signup() {
+function Signup({ onClose }: { onClose: () => void }) {
   const [newUser, setNewUser] = useState<CreateUserDto | null>();
   const { handleLogin } = useGlobalContext();
   const router = useRouter();

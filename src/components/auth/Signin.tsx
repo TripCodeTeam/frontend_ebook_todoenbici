@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-function Signin() {
+function Signin({ onClose }: { onClose: () => void }) {
   const [isSignin, setIsSignin] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
 
   const { handleLogin } = useGlobalContext();
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handlerSignin = async () => {
     try {
@@ -24,8 +24,9 @@ function Signin() {
       const res = await handleLogin(email as string, password as string);
 
       if (res.success == true) {
-        if (res.rol == "SELLER") router.push("/su/admin")
-        if (res.rol == "READER") window.location.href = "/discover";
+        onClose();
+        if (res.rol == "SELLER") router.push("/su/admin");
+        if (res.rol == "READER") router.push("/discover");
       }
     } catch (error) {
       console.error(error);
