@@ -6,10 +6,14 @@ export async function POST(req: Request) {
   try {
     const { bookId } = await req.json();
 
+    console.log(bookId);
+
     const response = await axios.get(
       `http://localhost:3000/ebook/${bookId}`,
       {}
     );
+
+    console.log(response);
 
     if (response.data.success == true) {
       const book: ScalarBook = await response.data.data;

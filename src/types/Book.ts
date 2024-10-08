@@ -30,3 +30,12 @@ export type ScalarPurchased = {
   created_at?: Date;
   updated_at?: Date;
 };
+
+export type CommentsBook = {
+  id?: string;
+  content: string,
+  clientId: string,
+  bookId: string,
+  created_at?: Date,
+  updated_at?: Date
+}
