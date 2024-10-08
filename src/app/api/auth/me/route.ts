@@ -30,7 +30,7 @@ export async function GET(req: Request) {
     console.log("data received: ", token);
 
     const response = await axios.get(
-      "http://localhost:3000/auth/me",
+      `${process.env.BACKEND_ENDPOINT}/auth/me`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
 

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     console.log("data received: ", data);
 
     const response: responseBackProps = await axios.post(
-      "http://localhost:3000/auth/login",
+      `${process.env.BACKEND_ENDPOINT}/auth/login`,
       data
     );
 

@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     console.log(bookId);
 
     const response = await axios.get(
-      `http://localhost:3000/ebook/${bookId}`,
+      `${process.env.BACKEND_ENDPOINT}/ebook/${bookId}`,
       {}
     );
 

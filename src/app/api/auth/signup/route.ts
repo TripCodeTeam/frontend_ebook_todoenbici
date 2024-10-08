@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const data: CreateUserDto = await req.json();
 
-    const response = await axios.post("http://localhost:3000/users", data);
+    const response = await axios.post(`${process.env.BACKEND_ENDPOINT}/users`, data);
 
     if (response.data.success == false) {
       throw new Error(response.data.error);

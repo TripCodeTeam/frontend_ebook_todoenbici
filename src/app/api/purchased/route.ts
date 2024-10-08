@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { clientId, bookId } = await req.json();
 
-    const response = await axios.post("http://localhost:3000/ebook/purchase", {
+    const response = await axios.post(`${process.env.BACKEND_ENDPOINT}/ebook/purchase`, {
       clientId,
       bookId,
     });

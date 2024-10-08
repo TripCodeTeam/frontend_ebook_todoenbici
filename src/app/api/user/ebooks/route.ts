@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const { sellerId } = await req.json();
   try {
-    const books = await fetch(`http://localhost:3000/ebook/all/${sellerId}`, {
+    const books = await fetch(`${process.env.BACKEND_ENDPOINT}/ebook/all/${sellerId}`, {
       method: "GET",
     });
 

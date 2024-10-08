@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const data: ScalarBook = await req.json();
 
-    const response = await axios.post("http://localhost:3000/ebook", data);
+    const response = await axios.post(`${process.env.BACKEND_ENDPOINT}/ebook`, data);
 
     if (response.data.success == false) {
       throw new Error(response.data.error);
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    const response = await axios.get("http://localhost:3000/ebook/all");
+    const response = await axios.get(`${process.env.BACKEND_ENDPOINT}/ebook/all`);
 
     if (response.data.success == true) {
       const books: ScalarBook[] = await response.data.data;
